@@ -23,18 +23,7 @@ const shopify = shopifyApp({
     ? { customShopDomains: [process.env.SHOP_CUSTOM_DOMAIN] }
     : {}),
   useOnlineTokens: true,
-  hooks: {
-    afterAuth: async ({ session, admin }) => {
-      const email = session.onlineAccessInfo?.associated_user?.email;
-      console.log("AFTERAUTH FIRED, email is:", email);
-      await prisma.settings.upsert({
-        where: { shop: session.shop },
-        update: { email },
-        create: {  shop: session.shop, email },
-      })
-       return admin.registerWebhooks({ session });
-    }
-  }
+
 });
 
 export default shopify;

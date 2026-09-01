@@ -35,6 +35,6 @@ datasource db {
 
 model Settings {
     shop String  @unique
-    threshold  Int
+    threshold  Int?
     email String?
 }

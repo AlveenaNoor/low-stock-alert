@@ -5,11 +5,12 @@ import prisma from "../db.server";
 export const loader = async ({ request }) => {
   const { admin, session } = await authenticate.admin(request);
   console.log(JSON.stringify(session, null, 2));
+   const email = session.onlineAccessInfo?.associated_user?.email;
 
   const settings =await prisma.settings.upsert({
     where: { shop: session.shop },
-    update: {},
-    create: { shop: session.shop, threshold: 5 },
+    update: email ? { email } : {},
+    create: { shop: session.shop, threshold: 5, email },
   })
 
   const response = await admin.graphql(`
