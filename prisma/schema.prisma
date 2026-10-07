@@ -38,3 +38,12 @@ model Settings {
     threshold  Int
     email String?
 }
+
+model LowStockAlert {
+  id              String   @id @default(cuid())
+  shop            String
+  inventoryItemId String
+  alertedAt       DateTime @default(now())
+
+  @@unique([shop, inventoryItemId])
+}
